@@ -41,5 +41,4 @@ public abstract class Person {
         this.lastName = lastName;
     }
 
-    public void toJSON() throws IOException {}
 }

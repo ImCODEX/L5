@@ -1,0 +1,25 @@
+[ {
+  "firstName" : "Andrei",
+  "lastName" : "Marian",
+  "studentId" : 103052,
+  "totalCredits" : 0,
+  "enrolledCourses" : [ ]
+}, {
+  "firstName" : "Codrut",
+  "lastName" : "Irimie",
+  "studentId" : 103053,
+  "totalCredits" : 0,
+  "enrolledCourses" : [ ]
+}, {
+  "firstName" : "Razvan",
+  "lastName" : "Postescu",
+  "studentId" : 103050,
+  "totalCredits" : 0,
+  "enrolledCourses" : [ ]
+}, {
+  "firstName" : "Marius",
+  "lastName" : "Pop",
+  "studentId" : 103051,
+  "totalCredits" : 0,
+  "enrolledCourses" : [ ]
+} ]
