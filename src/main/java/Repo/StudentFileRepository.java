@@ -69,6 +69,12 @@ public class StudentFileRepository extends  InMemoryRepository<Student>{
 
             s.setEnrolledCourses(courseList);
             repoList.add(s);
+            for (Course c:
+                 courseList) {
+                if(c.getStudentsEnrolled() == null)
+                    c.setStudentsEnrolled(new ArrayList<>());
+                c.enrollStudent(s);
+            }
         }
         reader.close();
         close();

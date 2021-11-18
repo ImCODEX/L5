@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 public class ModelTest {
     private Course courseBazeDeDate;
     private Course courseStructuriDeDate;
+    private Course courseAlgebra;
     private Student studentRazvan;
     private Student studentMarius;
     private Student studentAndrei;
@@ -47,6 +48,7 @@ public class ModelTest {
         studentCodrut = new Student("Codrut", "Irimie", 103053, 0, new ArrayList<>());
         courseBazeDeDate = new Course(0, "Baze de date", 5, 6);
         courseStructuriDeDate = new Course(1, "Structuri de date si algoritmi", 2, 5);
+        courseAlgebra = new Course(2, "Algebra", 7, 5);
 
         List<Course> teacherDorelCourses = new ArrayList<>();
         teacherDorelCourses.add(courseBazeDeDate);
@@ -54,6 +56,7 @@ public class ModelTest {
 
         List<Course> teacherDorCourses = new ArrayList<>();
         teacherDorCourses.add(courseStructuriDeDate);
+        teacherDorCourses.add(courseAlgebra);
         teacherDor.setCourses(teacherDorCourses);
 
         List<Student> courseBazeDeDateStudents = new ArrayList<>();
@@ -62,10 +65,14 @@ public class ModelTest {
 
         List<Course> studentRazvanCourses = new ArrayList<>();
         studentRazvanCourses.add(courseBazeDeDate);
+        studentRazvanCourses.add(courseStructuriDeDate);
         studentRazvan.setEnrolledCourses(studentRazvanCourses);
 
         List<Course> studentMariusCourses = new ArrayList<>();
         studentMariusCourses.add(courseBazeDeDate);
+        studentMariusCourses.add(courseStructuriDeDate);
+        studentMariusCourses.add(courseAlgebra);
+
         studentMarius.setEnrolledCourses(studentMariusCourses);
 
         List<Student> courseStructuriDeDateStudents = new ArrayList<>();
@@ -74,6 +81,7 @@ public class ModelTest {
 
         List<Course> studentAndreiCourses = new ArrayList<>();
         studentAndreiCourses.add(courseStructuriDeDate);
+        studentAndreiCourses.add(courseAlgebra);
         studentAndrei.setEnrolledCourses(studentAndreiCourses);
 
         List<Course> studentCodrutCourses = new ArrayList<>();
@@ -93,6 +101,7 @@ public class ModelTest {
 
         courses.add(courseBazeDeDate);
         courses.add(courseStructuriDeDate);
+        courses.add(courseAlgebra);
 
         teachers.add(teacherDor);
         teachers.add(teacherDorel);

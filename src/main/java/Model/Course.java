@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,6 +85,8 @@ public class Course {
         this.studentsEnrolled = studentsEnrolled;
     }
 
+    public void enrollStudent(Student student){ this.studentsEnrolled.add(student); }
+
     public int getCredits() {
         return credits;
     }
@@ -109,13 +112,18 @@ public class Course {
 
     @Override
     public String toString() {
+        List<Integer> studentsId = new ArrayList<>();
+        for (Student s:
+             studentsEnrolled) {
+            studentsId.add((int) s.getStudentId());
+        }
         if (teacher != null)
             return "Course{" +
                     "id=" + id +
                     ", name=" + name + '\'' +
                     ", teacher=" + teacher +
                     ", maxEnrollment=" + maxEnrollment +
-                    ", studentsEnrolled=" + studentsEnrolled +
+                    ", studentsEnrolled=" + studentsId +
                     ", credits=" + credits +
                     '}';
         else
@@ -124,7 +132,7 @@ public class Course {
                     ", name=" + name + '\'' +
                     ", teacher=null" +
                     ", maxEnrollment=" + maxEnrollment +
-                    ", studentsEnrolled=" + studentsEnrolled +
+                    ", studentsEnrolled=" + studentsId +
                     ", credits=" + credits +
                     '}';
     }

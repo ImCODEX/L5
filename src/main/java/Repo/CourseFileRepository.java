@@ -49,9 +49,7 @@ public class CourseFileRepository extends  InMemoryRepository<Course>{
             c.setMaxEnrollment(n.path("maxEnrollment").asInt());
             c.setCredits(n.path("credits").asInt());
 
-
             repoList.add(c);
-            System.out.println(c);
         }
         reader.close();
         close();
