@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+/**
+ * JSON Serializer for Students
+ * used for storing Students
+ * in JSON format
+ */
 public class StudentSerializer extends JsonSerializer<Student> {
 
 

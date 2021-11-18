@@ -17,6 +17,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * FileRepository for Student
+ * Automatically reads from "studentData.json" when instantiated
+ * and stores Students in memory
+ */
 public class StudentFileRepository extends  InMemoryRepository<Student>{
     private CourseFileRepository courseFileRepository;
 
@@ -80,6 +85,13 @@ public class StudentFileRepository extends  InMemoryRepository<Student>{
         close();
     }
 
+    /**
+     * StudentFileRepository destructor method
+     * automatically called for now in constructor
+     * since there is no method for the user to
+     * insert objects in the UI
+     * @throws IOException
+     */
     public void close() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 

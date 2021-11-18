@@ -6,6 +6,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
+/**
+ * JSON Serializer for Course
+ * used for storing Courses
+ * in JSON format
+ */
 public class CourseSerializer extends JsonSerializer<Course> {
     @Override
     public void serialize(Course course, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {

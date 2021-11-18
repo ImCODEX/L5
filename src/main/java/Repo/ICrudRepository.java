@@ -2,6 +2,10 @@ package Repo;
 
 import java.util.List;
 
+/**
+ * Absolute Base Repository
+ * @param <T>
+ */
 public interface ICrudRepository<T> {
 
     T add(T obj);

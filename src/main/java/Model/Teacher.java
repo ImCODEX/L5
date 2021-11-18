@@ -16,6 +16,9 @@ public class Teacher extends Person{
     private int teacherId;
     private List<Course> courses;
 
+    /**
+     * Default Constructor
+     */
     public Teacher() {
         super();
     }
@@ -62,6 +65,12 @@ public class Teacher extends Person{
         return Objects.equals(getFirstName(), teacher.getFirstName()) && Objects.equals(getLastName(), teacher.getLastName());
     }
 
+    /**
+     * toString() method for Teacher
+     * inserts id's instead of Courses
+     * to resolve circular dependency
+     * @return
+     */
     @Override
     public String toString() {
         List<String> coursesNames = new ArrayList<>();

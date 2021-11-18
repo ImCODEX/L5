@@ -16,9 +16,20 @@ public class Course {
     private List<Student> studentsEnrolled;
     private int credits;
 
+    /**
+     * Default Constructor
+     */
     public Course() {
     }
 
+    /**
+     * Constructor without teacher and enrolledStudents
+     * to resolve circular dependencies
+     * @param id:               id
+     * @param name:             String
+     * @param maxEnrollment:    int - maximum number of Student's
+     * @param credits:          int
+     */
     public Course(int id, String name, int maxEnrollment, int credits) {
         this.id = id;
         this.name = name;
@@ -29,6 +40,7 @@ public class Course {
     /**
      * Course Class
      *
+     * @param id:               id
      * @param name:             String
      * @param teacher:          Teacher Object
      * @param maxEnrollment:    int - maximum number of Student's
@@ -110,6 +122,11 @@ public class Course {
         return Objects.equals(teacher, course.getTeacher()) && Objects.equals(name, course.getName());
     }
 
+    /**
+     * toString() method for Course
+     * checks for null teacher
+     * @return: String
+     */
     @Override
     public String toString() {
         List<Integer> studentsId = new ArrayList<>();

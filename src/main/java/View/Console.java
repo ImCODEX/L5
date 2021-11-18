@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-
+/**
+ * UI
+ * Main method runs the user interface
+ */
 public class Console {
     public static void main(String[] args) throws IOException, CustomExceptions {
         Scanner scanner = new Scanner(System.in);
