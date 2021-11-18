@@ -1,3 +1,4 @@
+/*
 import Repo.CourseRepository;
 import Repo.StudentRepository;
 import Repo.TeacherRepository;
@@ -15,21 +16,25 @@ import Model.Student;
 import Model.Teacher;
 import Repo.InMemoryRepository;
 
+*/
 /**
  * Test Class for Repositories
- */
+ *//*
+
 
 public class RepoTest {
     private InMemoryRepository<Student> studentInMemoryRepository;
     private InMemoryRepository<Teacher> teacherInMemoryRepository;
     private InMemoryRepository<Course> courseInMemoryRepository;
 
-    /**
+    */
+/**
      * Setup method
      * instantiates Student, Teacher, Course Repositories
      * and adds 1 Object of relevant type to each one of
      * the repositories
-     */
+     *//*
+
     @BeforeEach
     public void setup(){
         studentInMemoryRepository = new StudentRepository();
@@ -41,15 +46,17 @@ public class RepoTest {
         List<Course> courses = new ArrayList<>();
 
         studentInMemoryRepository.add(new Student("Popescu", "Ion", 11111, 0, courses));
-        teacherInMemoryRepository.add(new Teacher("Vasile", "Ilie", courses));
+        teacherInMemoryRepository.add(new Teacher("Vasile", "Ilie", 1, courses));
         courseInMemoryRepository.add(new Course(3,"FP",teacherInMemoryRepository.getAll().get(0), 10, students, 5));
 
 
     }
 
-    /**
+    */
+/**
      * Test for add Method
-     */
+     *//*
+
     @Test
     public void testAdd(){
         assertEquals(studentInMemoryRepository.getAll().size(), 1);
@@ -61,13 +68,15 @@ public class RepoTest {
         List<Course> courses = new ArrayList<>();
 
         assertEquals(studentInMemoryRepository.getAll().get(0), new Student("Popescu", "Ion", 11111, 0, courses));
-        assertEquals(teacherInMemoryRepository.getAll().get(0), new Teacher("Vasile", "Ilie", courses));
+        assertEquals(teacherInMemoryRepository.getAll().get(0), new Teacher("Vasile", "Ilie", 1, courses));
         assertEquals(courseInMemoryRepository.getAll().get(0), new Course(6,"FP",teacherInMemoryRepository.getAll().get(0), 10, students, 5));
     }
 
-    /**
+    */
+/**
      * Test for delete method
-     */
+     *//*
+
     @Test
     public void testDelete(){
         studentInMemoryRepository.delete(studentInMemoryRepository.getAll().get(0));
@@ -80,9 +89,11 @@ public class RepoTest {
 
     }
 
-    /**
+    */
+/**
      * Test for update Method
-     */
+     *//*
+
     @Test
     public void testUpdate(){
         List<Student> students = new ArrayList<>();
@@ -90,11 +101,11 @@ public class RepoTest {
         List<Course> courses = new ArrayList<>();
 
         studentInMemoryRepository.update(studentInMemoryRepository.getAll().get(0), new Student("SuperPopescu", "SuperIon", 99999, 0, courses));
-        teacherInMemoryRepository.update(teacherInMemoryRepository.getAll().get(0), new Teacher("SuperVasile", "SuperIlie", courses));
+        teacherInMemoryRepository.update(teacherInMemoryRepository.getAll().get(0), new Teacher("SuperVasile", "SuperIlie", 1, courses));
         courseInMemoryRepository.update(courseInMemoryRepository.getAll().get(0), new Course(4,"FP",teacherInMemoryRepository.getAll().get(0), 10, students, 5));
 
         assertEquals(studentInMemoryRepository.getAll().get(0), new Student("SuperPopescu", "SuperIon", 99999, 0, courses));
-        assertNotEquals(teacherInMemoryRepository.getAll().get(0), new Teacher("Vasile", "Ilie", courses));
+        assertNotEquals(teacherInMemoryRepository.getAll().get(0), new Teacher("Vasile", "Ilie", 1, courses));
         assertEquals(courseInMemoryRepository.getAll().get(0), new Course(5,"FP",teacherInMemoryRepository.getAll().get(0), 10, students, 5));
 
         assertEquals(studentInMemoryRepository.getAll().size(), 1);
@@ -102,9 +113,11 @@ public class RepoTest {
         assertEquals(courseInMemoryRepository.getAll().size(), 1);
     }
 
-    /**
+    */
+/**
      * Test for getAll/Read Method
-     */
+     *//*
+
     @Test
     public void testRead(){
         List<Course> courses = new ArrayList<>();
@@ -117,3 +130,4 @@ public class RepoTest {
 
 
 }
+*/

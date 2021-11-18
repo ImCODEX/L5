@@ -1,16 +1,14 @@
 import Model.*;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,6 +28,8 @@ public class ModelTest {
     private Teacher teacherDorel;
     private Teacher teacherDor;
     private List<Student> students = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
+    private List<Teacher> teachers = new ArrayList<>();
 
     /**
      * Setup method
@@ -38,15 +38,15 @@ public class ModelTest {
      * declaration of Teacher, Student, Course Objects
      */
     @BeforeEach
-    public void setup(){
+    public void setup() {
         teacherDorel = new Teacher("Dorel", "Bob", 1, new ArrayList<>());
         teacherDor = new Teacher("Dor", "Dob", 2, new ArrayList<>());
         studentRazvan = new Student("Razvan", "Postescu", 103050, 0, new ArrayList<>());
         studentMarius = new Student("Marius", "Pop", 103051, 0, new ArrayList<>());
         studentAndrei = new Student("Andrei", "Marian", 103052, 0, new ArrayList<>());
         studentCodrut = new Student("Codrut", "Irimie", 103053, 0, new ArrayList<>());
-        courseBazeDeDate = new Course(0, "Baze de date",  5,  6);
-        courseStructuriDeDate = new Course(1, "Structuri de date si algoritmi", 2,  5);
+        courseBazeDeDate = new Course(0, "Baze de date", 5, 6);
+        courseStructuriDeDate = new Course(1, "Structuri de date si algoritmi", 2, 5);
 
         List<Course> teacherDorelCourses = new ArrayList<>();
         teacherDorelCourses.add(courseBazeDeDate);
@@ -91,6 +91,11 @@ public class ModelTest {
         students.add(studentRazvan);
         students.add(studentMarius);
 
+        courses.add(courseBazeDeDate);
+        courses.add(courseStructuriDeDate);
+
+        teachers.add(teacherDor);
+        teachers.add(teacherDorel);
     }
 
     /**
@@ -98,7 +103,7 @@ public class ModelTest {
      * of Teacher, Student, Course Objects
      */
     @Test
-    public void printAll(){
+    public void printAll() {
         System.out.println(studentRazvan.toString());
         System.out.println(studentMarius.toString());
         System.out.println(studentAndrei.toString());
@@ -110,7 +115,7 @@ public class ModelTest {
      * and good functionality of Class Student getter
      */
     @Test
-    public void testEnrolledCourses(){
+    public void testEnrolledCourses() {
         List<Course> studentRazvanCourses = new ArrayList<>();
         studentRazvanCourses.add(courseBazeDeDate);
         assertEquals(studentRazvan.getEnrolledCourses(), studentRazvanCourses);
@@ -127,7 +132,7 @@ public class ModelTest {
      * and good functionality of Class Teacher getter
      */
     @Test
-    public void testListOfCourses(){
+    public void testListOfCourses() {
         List<Course> teacherDorelCourses = new ArrayList<>();
         teacherDorelCourses.add(courseBazeDeDate);
         assertEquals(teacherDorel.getCourses(), teacherDorelCourses);
@@ -137,7 +142,7 @@ public class ModelTest {
      * Test for good insertion of Teacher in Course Class
      */
     @Test
-    public void testCoursesTeacher(){
+    public void testCoursesTeacher() {
         assertEquals(courseBazeDeDate.getTeacher(), teacherDorel);
         assertNotEquals(courseBazeDeDate.getTeacher(), teacherDor);
 
@@ -146,31 +151,91 @@ public class ModelTest {
     }
 
     @Test
-    public void testToJSON() throws IOException {
+    public void testToCourseJSON() throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
         ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
 
-        String serialized_student = new String();
+        String serializedCourse = "";
 
-        for(Student s : students) {
+        for (Course c : courses) {
 
-            objectMapper.registerModules(new SimpleModule().addSerializer(Student.class, new StudentSerializer()));
+            objectMapper.registerModules(new SimpleModule().addSerializer(Course.class, new CourseSerializer()));
 
-            System.out.println(objectMapper.writeValueAsString(s));
+            System.out.println(objectMapper.writeValueAsString(c));
 
-            serialized_student += objectMapper.writeValueAsString(s);
+            serializedCourse += objectMapper.writeValueAsString(c);
 
-            serialized_student += "\r\n";
+            serializedCourse += ",";
 
-
-
-            writer.writeValue(new File("studentData.json"), serialized_student);
+            writer.writeValue(new File("courseData.json"), serializedCourse);
         }
     }
 
     @Test
+    public void testToStudentJSON() throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
+
+        String serializedStudent = "";
+
+        for (Student c : students) {
+
+            objectMapper.registerModules(new SimpleModule().addSerializer(Student.class, new StudentSerializer()));
+
+            System.out.println(objectMapper.writeValueAsString(c));
+
+            serializedStudent += objectMapper.writeValueAsString(c);
+
+            serializedStudent += ",";
+
+            writer.writeValue(new File("studentData.json"), serializedStudent);
+        }
+    }
+
+    @Test
+    public void testToTeacherJSON() throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
+
+        String serializedTeacher = "";
+
+        for (Teacher c : teachers) {
+
+            objectMapper.registerModules(new SimpleModule().addSerializer(Teacher.class, new TeacherSerializer()));
+
+            System.out.println(objectMapper.writeValueAsString(c));
+
+            serializedTeacher += objectMapper.writeValueAsString(c);
+
+            serializedTeacher += ",";
+
+            writer.writeValue(new File("TeacherData.json"), serializedTeacher);
+        }
+    }
+
+    @Test
+    public void write_date() throws IOException {
+        for (Student s:
+             students) {
+            s.setEnrolledCourses(new ArrayList<>());
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
+
+        writer.writeValue(new File("data.json"), students);
+    }
+
+
+}
+
+   /* @Test
     public void readFromJSON() throws IOException{
         Reader reader = new BufferedReader(new FileReader("data.json"));
 
@@ -194,14 +259,8 @@ public class ModelTest {
             List<Course> courseList = new ArrayList<>(coursesID.stream().map(x -> x))
 
 
-            JsonNode add = n.path("address");
-            a.setCity(add.path("city").asText());
-            a.setStreet(add.path("street").asText());
-
-            s.setAddress(a);
-            students.add(s);
         }
         reader.close();
-    }
+    }*/
 
-}
+

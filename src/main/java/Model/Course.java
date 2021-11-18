@@ -1,8 +1,5 @@
 package Model;
 
-import Model.Student;
-import Model.Teacher;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -18,8 +15,10 @@ public class Course {
     private List<Student> studentsEnrolled;
     private int credits;
 
+    public Course() {
+    }
 
-    public Course(int id, String name, int maxEnrollment, int credits){
+    public Course(int id, String name, int maxEnrollment, int credits) {
         this.id = id;
         this.name = name;
         this.maxEnrollment = maxEnrollment;
@@ -28,11 +27,12 @@ public class Course {
 
     /**
      * Course Class
-     * @param name: String
-     * @param teacher: Teacher Object
-     * @param maxEnrollment: int - maximum number of Student's
+     *
+     * @param name:             String
+     * @param teacher:          Teacher Object
+     * @param maxEnrollment:    int - maximum number of Student's
      * @param studentsEnrolled: List<Student>
-     * @param credits: int
+     * @param credits:          int
      */
 
     public Course(int id, String name, Teacher teacher, int maxEnrollment, List<Student> studentsEnrolled, int credits) {
@@ -95,12 +95,13 @@ public class Course {
     /**
      * Equals method for comparison
      * Used especially in update() method from InMemoryRepository.java
+     *
      * @param o: another Teacher Object
      * @return: boolean
      */
     @Override
-    public boolean equals(Object o){
-        if (this == o ) return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
         return Objects.equals(teacher, course.getTeacher()) && Objects.equals(name, course.getName());
@@ -108,9 +109,25 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "name='" + name + '\'' +
-                ", teacher=" + teacher +
-                ", maxEnrollment=" + maxEnrollment;
+        if (teacher != null)
+            return "Course{" +
+                    "id=" + id +
+                    ", name=" + name + '\'' +
+                    ", teacher=" + teacher +
+                    ", maxEnrollment=" + maxEnrollment +
+                    ", studentsEnrolled=" + studentsEnrolled +
+                    ", credits=" + credits +
+                    '}';
+        else
+            return "Course{" +
+                    "id=" + id +
+                    ", name=" + name + '\'' +
+                    ", teacher=null" +
+                    ", maxEnrollment=" + maxEnrollment +
+                    ", studentsEnrolled=" + studentsEnrolled +
+                    ", credits=" + credits +
+                    '}';
     }
+
+
 }

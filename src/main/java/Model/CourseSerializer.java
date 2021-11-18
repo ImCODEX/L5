@@ -12,7 +12,7 @@ public class CourseSerializer extends JsonSerializer<Course> {
         jsonGenerator.writeStartObject();
 
         jsonGenerator.writeNumberField("id", course.getId());
-        jsonGenerator.writeStringField("firstName", course.getName());
+        jsonGenerator.writeStringField("name", course.getName());
         jsonGenerator.writeNumberField("maxEnrollment", course.getMaxEnrollment());
         jsonGenerator.writeNumberField("credits", course.getCredits());
 

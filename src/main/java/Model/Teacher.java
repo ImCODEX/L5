@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,10 @@ import java.util.Objects;
 public class Teacher extends Person{
     private int teacherId;
     private List<Course> courses;
+
+    public Teacher() {
+        super();
+    }
 
     /**
      * Teacher Constructor
@@ -59,9 +64,16 @@ public class Teacher extends Person{
 
     @Override
     public String toString() {
+        List<String> coursesNames = new ArrayList<>();
+        for (Course c :
+                courses) {
+            coursesNames.add(c.getName());
+        }
         return "Teacher{" +
-                "firstName= " + getFirstName() +
+                "id= " + getTeacherId() +
+                " firstName= " + getFirstName() +
                 " lastName= " + getLastName() +
+                " courses= " + coursesNames +
                 '}';
     }
 

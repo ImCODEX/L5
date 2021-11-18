@@ -82,12 +82,17 @@ public class Student extends Person{
 
     @Override
     public String toString() {
+        List<String> enrolledCoursesNames = new ArrayList<>();
+        for (Course c :
+                enrolledCourses) {
+            enrolledCoursesNames.add(c.getName());
+        }
         return "Student{" +
                 " studentId= " + studentId +
-                " studentName= " + getFirstName() +
-                " studentLastName= " + getLastName() +
+                " name= " + getFirstName() +
+                " lastName= " + getLastName() +
                 ", totalCredits= " + totalCredits +
-                ", enrolledCourses= " + enrolledCourses +
+                ", enrolledCourses= " + enrolledCoursesNames +
                 '}';
     }
 
