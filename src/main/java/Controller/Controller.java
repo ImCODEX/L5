@@ -12,19 +12,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class MyComparator implements java.util.Comparator<Student>{
-
-    public MyComparator(){
-        super();
-    }
-
-    public int compare(Student s1, Student s2){
-        int l1 = s1.getEnrolledCourses().size();
-        int l2 = s2.getEnrolledCourses().size();
-        return l1 - l2;
-    }
-}
-
 public class Controller {
     private CourseFileRepository courseFileRepository;
     private StudentFileRepository studentFileRepository;
