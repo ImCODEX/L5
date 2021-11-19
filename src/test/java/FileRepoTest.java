@@ -37,59 +37,6 @@ public class FileRepoTest {
         JsonManualRepair jsonManualRepair = new JsonManualRepair();
         jsonManualRepair.repairJSON();
 
-       /* Course courseStatistica = new Course(1, "Statistica", 4, 5);
-        Course courseMAP = new Course(2, "MAP", 4, 5);
-        Course courseLP = new Course(3, "LP", 4, 5);
-
-        courseFileRepository.add(courseStatistica);
-        courseFileRepository.add(courseMAP);
-        courseFileRepository.add(courseLP);
-
-        List<Integer> coursesId1 = new ArrayList<>();
-        List<Integer> coursesId2 = new ArrayList<>();
-        List<Integer> coursesId3 = new ArrayList<>();
-        coursesId1.add(1);
-        coursesId1.add(2);
-        coursesId2.add(2);
-        coursesId2.add(3);
-        coursesId3.add(1);
-        coursesId3.add(2);
-        coursesId3.add(3);
-        List<Course> tempCourses1 = new ArrayList<>();
-        List<Course> tempCourses2 = new ArrayList<>();
-        List<Course> tempCourses3 = new ArrayList<>();
-        for (Integer id :
-                coursesId1) {
-            for (Course c :
-                    courseFileRepository.getAll()) {
-                if (c.getId() == id)
-                    tempCourses1.add(c);
-            }
-        }
-        for (Integer id :
-                coursesId2) {
-            for (Course c :
-                    courseFileRepository.getAll()) {
-                if (c.getId() == id)
-                    tempCourses2.add(c);
-            }
-        }for (Integer id :
-                coursesId3) {
-            for (Course c :
-                    courseFileRepository.getAll()) {
-                if (c.getId() == id)
-                    tempCourses3.add(c);
-            }
-        }
-
-        studentRazvan = new Student("Razvan", "Postescu", 103050, 0, tempCourses1);
-        studentMarius = new Student("Marius", "Pop", 103051, 0, tempCourses2);
-        studentAndrei = new Student("Andrei", "Marian", 103052, 0, tempCourses3);
-
-        teacherDorel = new Teacher("Dorel", "Bob", 1, (List<Course>) tempCourses1.get(0));
-        teacherDor = new Teacher("Dor", "Dob", 2, (List<Course>) tempCourses2.get(1));
-
-*/
     }
 
     @Test
