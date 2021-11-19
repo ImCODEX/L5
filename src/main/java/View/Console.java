@@ -236,7 +236,7 @@ public class Console {
     public void deleteTeacher() throws  IOException, CustomExceptions{
         Scanner scanner = new Scanner(System.in);
         showTeachers();
-        System.out.println("ID of Student you want to delete:");
+        System.out.println("ID of Teacher you want to delete:");
         try{
             int id = scanner.nextInt();
             controller.deleteTeacher(controller.findTeacherById(id));
