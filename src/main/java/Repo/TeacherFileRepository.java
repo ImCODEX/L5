@@ -1,10 +1,9 @@
 package Repo;
 
+import CustomExceptions.CustomExceptions;
 import Model.*;
 import Model.Teacher;
 import Model.TeacherSerializer;
-import Repo.CourseFileRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +13,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,13 +20,15 @@ import java.util.List;
  * Automatically reads from "TeacherData.json" when instantiated
  * and stores Teachers in memory
  */
-public class TeacherFileRepository extends  InMemoryRepository<Teacher>{
+public class TeacherFileRepository extends FileRepository<Teacher> {
     private CourseFileRepository courseFileRepository;
 
     public TeacherFileRepository(CourseFileRepository courseFileRepository_) throws IOException {
         super();
         courseFileRepository = courseFileRepository_;
+    }
 
+    public void run() throws IOException {
         BufferedReader tempReader = new BufferedReader(new FileReader("TeacherData.json"));
 
         String line = tempReader.readLine().replace("\\","");
@@ -57,29 +57,31 @@ public class TeacherFileRepository extends  InMemoryRepository<Teacher>{
             t.setLastName(n.path("lastName").asText());
 
             String courses = n.path("courses").asText();
-            String[] splits =  courses.replace("[","").replace("]","").replace(" ","").split(",");
-            List<Integer> coursesID = new ArrayList<>(Arrays.stream(splits).map(Integer::valueOf).toList());
-
+            List<String> splits = Arrays.asList(courses.replace("[","").replace("]","").replace(" ","").split(","));
             List<Course> courseList = new ArrayList<>();
-            for (Course c:
-                    courseFileRepository.repoList) {
-                for (Integer cID:
-                        coursesID) {
-                    if(cID == c.getId())
-                        courseList.add(c);
+
+            if (!splits.get(0).equals("")) {
+                List<Integer> coursesID = new ArrayList<>(splits.stream().map(Integer::valueOf).toList());
+
+                for (Course c :
+                        courseFileRepository.repoList) {
+                    for (Integer cID :
+                            coursesID) {
+                        if (cID == c.getId())
+                            courseList.add(c);
+                    }
                 }
             }
 
             t.setCourses(courseList);
             for (Course c:
-                 courseList) {
+                    courseList) {
                 c.setTeacher(t);
             }
             repoList.add(t);
         }
         reader.close();
-        close();
-}
+    }
 
     /**
      * TeacherFileRepository destructor method
@@ -105,5 +107,15 @@ public class TeacherFileRepository extends  InMemoryRepository<Teacher>{
 
             writer.writeValue(new File("TeacherData.json"), serializedTeacher);
         }
+    }
+
+    @Override
+    public Teacher find(Integer id) throws CustomExceptions {
+        for (Teacher t:
+             repoList) {
+            if(t.getTeacherId() == id)
+                return t;
+        }
+        throw (new CustomExceptions("Teacher not found!"));
     }
 }

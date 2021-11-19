@@ -1,10 +1,8 @@
 package Repo;
 
+import CustomExceptions.CustomExceptions;
 import Model.Course;
 import Model.CourseSerializer;
-import Model.Student;
-import Model.StudentSerializer;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,25 +10,24 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * FileRepository for Course
  * Automatically reads from "courseData.json" when instantiated
  * and stores Courses in memory
  */
-public class CourseFileRepository extends  InMemoryRepository<Course>{
+public class CourseFileRepository extends FileRepository<Course> {
 
     /**
      * CourseFileRepository
      * reads from "courseData.json"
      * @throws IOException
      */
-    public CourseFileRepository() throws IOException {
+    public CourseFileRepository(){
         super();
+    }
+
+    public void run() throws IOException{
         BufferedReader tempReader = new BufferedReader(new FileReader("courseData.json"));
 
         String line = tempReader.readLine().replace("\\","");
@@ -62,8 +59,8 @@ public class CourseFileRepository extends  InMemoryRepository<Course>{
             repoList.add(c);
         }
         reader.close();
-        close();
     }
+
 
     /**
      * CourseFileRepository destructor method
@@ -89,5 +86,15 @@ public class CourseFileRepository extends  InMemoryRepository<Course>{
 
             writer.writeValue(new File("courseData.json"), serializedCourse);
         }
+    }
+
+    @Override
+    public Course find(Integer id) throws CustomExceptions {
+        for (Course c:
+                repoList) {
+            if(c.getId() == id)
+                return c;
+        }
+        throw(new CustomExceptions("Course not found!"));
     }
 }

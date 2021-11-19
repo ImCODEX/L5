@@ -25,10 +25,11 @@ public class Course {
     /**
      * Constructor without teacher and enrolledStudents
      * to resolve circular dependencies
-     * @param id:               id
-     * @param name:             String
-     * @param maxEnrollment:    int - maximum number of Student's
-     * @param credits:          int
+     *
+     * @param id:            id
+     * @param name:          String
+     * @param maxEnrollment: int - maximum number of Student's
+     * @param credits:       int
      */
     public Course(int id, String name, int maxEnrollment, int credits) {
         this.id = id;
@@ -97,7 +98,9 @@ public class Course {
         this.studentsEnrolled = studentsEnrolled;
     }
 
-    public void enrollStudent(Student student){ this.studentsEnrolled.add(student); }
+    public void enrollStudent(Student student) {
+        this.studentsEnrolled.add(student);
+    }
 
     public int getCredits() {
         return credits;
@@ -125,15 +128,17 @@ public class Course {
     /**
      * toString() method for Course
      * checks for null teacher
+     *
      * @return: String
      */
     @Override
     public String toString() {
         List<Integer> studentsId = new ArrayList<>();
-        for (Student s:
-             studentsEnrolled) {
-            studentsId.add((int) s.getStudentId());
-        }
+        if (studentsEnrolled != null)
+            for (Student s :
+                    studentsEnrolled) {
+                studentsId.add((int) s.getStudentId());
+            }
         if (teacher != null)
             return "Course{" +
                     "id=" + id +

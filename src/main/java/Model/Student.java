@@ -34,6 +34,11 @@ public class Student extends Person{
      * @param enrolledCourses_: List<Course>
      */
 
+    public Student(String firstName, String lastName, long studentId_, int totalCredits_) {
+        super(firstName, lastName);
+        studentId = studentId_;
+        totalCredits = totalCredits_;
+    }
 
     public Student(String firstName, String lastName, long studentId_, int totalCredits_, List<Course> enrolledCourses_) {
         super(firstName, lastName);
@@ -66,6 +71,7 @@ public class Student extends Person{
         this.enrolledCourses = enrolledCourses;
     }
 
+
     /**
      * Equals method for comparison
      * Used especially in update() method from InMemoryRepository.java
@@ -96,9 +102,5 @@ public class Student extends Person{
                 '}';
     }
 
-    @Override
-    public void toJSON() throws IOException {
-
-    }
 
 }

@@ -15,10 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
- * Test Class for Model
+ * JsonManualRepair used when custom
+ * destructor method close() from
+ * each FileRepository doesn't get called
+ * because of an unhandled Exception
  */
 
-public class ModelTest {
+public class JsonManualRepair {
     private Course courseBazeDeDate;
     private Course courseStructuriDeDate;
     private Course courseAlgebra;
@@ -107,6 +110,13 @@ public class ModelTest {
         teachers.add(teacherDorel);
     }
 
+    @Test
+    public void repairJSON() throws IOException{
+        testToCourseJSON();
+        testToStudentJSON();
+        testToTeacherJSON();
+    }
+
     /**
      * Test for toString() methods
      * of Teacher, Student, Course Objects
@@ -119,45 +129,6 @@ public class ModelTest {
         System.out.println(studentCodrut.toString());
     }
 
-    /**
-     * Test for good insertion of ArrayList<Course> in Student Class
-     * and good functionality of Class Student getter
-     */
-    @Test
-    public void testEnrolledCourses() {
-        List<Course> studentRazvanCourses = new ArrayList<>();
-        studentRazvanCourses.add(courseBazeDeDate);
-        assertEquals(studentRazvan.getEnrolledCourses(), studentRazvanCourses);
-
-        List<Course> studentMariusCourses = new ArrayList<>();
-        studentMariusCourses.add(courseBazeDeDate);
-        assertEquals(studentMarius.getEnrolledCourses(), studentMariusCourses);
-
-    }
-
-
-    /**
-     * Test for good insertion of ArrayList<Course> in Teacher Class
-     * and good functionality of Class Teacher getter
-     */
-    @Test
-    public void testListOfCourses() {
-        List<Course> teacherDorelCourses = new ArrayList<>();
-        teacherDorelCourses.add(courseBazeDeDate);
-        assertEquals(teacherDorel.getCourses(), teacherDorelCourses);
-    }
-
-    /**
-     * Test for good insertion of Teacher in Course Class
-     */
-    @Test
-    public void testCoursesTeacher() {
-        assertEquals(courseBazeDeDate.getTeacher(), teacherDorel);
-        assertNotEquals(courseBazeDeDate.getTeacher(), teacherDor);
-
-        assertEquals(courseStructuriDeDate.getTeacher(), teacherDor);
-        assertNotEquals(courseStructuriDeDate.getTeacher(), teacherDorel);
-    }
 
     @Test
     public void testToCourseJSON() throws IOException {
@@ -228,6 +199,9 @@ public class ModelTest {
         }
     }
 
+
+
+    /*
     @Test
     public void write_date() throws IOException {
         for (Student s:
@@ -240,6 +214,8 @@ public class ModelTest {
 
         writer.writeValue(new File("data.json"), students);
     }
+
+     */
 
 
 }

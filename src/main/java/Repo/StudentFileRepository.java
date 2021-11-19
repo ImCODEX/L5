@@ -1,10 +1,9 @@
 package Repo;
 
-import Model.*;
+import CustomExceptions.CustomExceptions;
+import Model.Course;
 import Model.Student;
 import Model.StudentSerializer;
-import Repo.CourseFileRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +13,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,23 +20,25 @@ import java.util.List;
  * Automatically reads from "studentData.json" when instantiated
  * and stores Students in memory
  */
-public class StudentFileRepository extends  InMemoryRepository<Student>{
+public class StudentFileRepository extends FileRepository<Student> {
     private CourseFileRepository courseFileRepository;
 
-    public StudentFileRepository(CourseFileRepository courseFileRepository_) throws IOException {
+    public StudentFileRepository(CourseFileRepository courseFileRepository_) {
         super();
-
         courseFileRepository = courseFileRepository_;
+    }
+
+    public void run() throws IOException {
 
         BufferedReader tempReader = new BufferedReader(new FileReader("studentData.json"));
 
-        String line = tempReader.readLine().replace("\\","");
+        String line = tempReader.readLine().replace("\\", "");
         tempReader.close();
 
         StringBuilder stringBuilder = new StringBuilder(line);
 
-        stringBuilder.replace(0,1,"[");
-        stringBuilder.replace(line.length()-2,line.length(),"]");
+        stringBuilder.replace(0, 1, "[");
+        stringBuilder.replace(line.length() - 2, line.length(), "]");
 
         BufferedWriter tempWriter = new BufferedWriter(new FileWriter("studentData.json"));
 
@@ -50,7 +50,7 @@ public class StudentFileRepository extends  InMemoryRepository<Student>{
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode parser = objectMapper.readTree(reader);
 
-        for (JsonNode n: parser){
+        for (JsonNode n : parser) {
             Student s = new Student();
 
             s.setStudentId(n.path("studentId").asInt());
@@ -60,29 +60,31 @@ public class StudentFileRepository extends  InMemoryRepository<Student>{
 
 
             String courses = n.path("enrolledCourses").asText();
-            String[] splits =  courses.replace("[","").replace("]","").replace(" ","").split(",");
-            List<Integer> coursesID = new ArrayList<>(Arrays.asList(splits)).stream().map(Integer::valueOf).toList();
+            List<String> splits = Arrays.asList(courses.replace("[", "").replace("]", "").replace(" ", "").split(","));
             List<Course> courseList = new ArrayList<>();
-            for (Course c:
-                    courseFileRepository.repoList) {
-                for (Integer cID:
-                     coursesID) {
-                    if(cID == c.getId())
-                        courseList.add(c);
-                }
-            }
+            if (!splits.get(0).equals("")) {
+                List<Integer> coursesID = new ArrayList<>(splits).stream().map(Integer::valueOf).toList();
 
+                for (Course c :
+                        courseFileRepository.repoList) {
+                    for (Integer cID :
+                            coursesID) {
+                        if (cID == c.getId())
+                            courseList.add(c);
+                    }
+                }
+
+            }
             s.setEnrolledCourses(courseList);
             repoList.add(s);
-            for (Course c:
-                 courseList) {
-                if(c.getStudentsEnrolled() == null)
+            for (Course c :
+                    courseList) {
+                if (c.getStudentsEnrolled() == null)
                     c.setStudentsEnrolled(new ArrayList<>());
                 c.enrollStudent(s);
             }
         }
         reader.close();
-        close();
     }
 
     /**
@@ -90,6 +92,7 @@ public class StudentFileRepository extends  InMemoryRepository<Student>{
      * automatically called for now in constructor
      * since there is no method for the user to
      * insert objects in the UI
+     *
      * @throws IOException
      */
     public void close() throws IOException {
@@ -99,7 +102,7 @@ public class StudentFileRepository extends  InMemoryRepository<Student>{
 
         String serializedStudent = "";
 
-        for(Student s : repoList) {
+        for (Student s : repoList) {
 
             objectMapper.registerModules(new SimpleModule().addSerializer(Student.class, new StudentSerializer()));
 
@@ -109,5 +112,15 @@ public class StudentFileRepository extends  InMemoryRepository<Student>{
 
             writer.writeValue(new File("StudentData.json"), serializedStudent);
         }
+    }
+
+    @Override
+    public Student find(Integer id) throws CustomExceptions {
+        for (Student s :
+                repoList)
+            if (s.getStudentId() == id)
+                return s;
+        throw (new CustomExceptions("Student not found!"));
+
     }
 }

@@ -2,6 +2,8 @@ package Repo;
 
 
 
+import CustomExceptions.CustomExceptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +12,12 @@ import java.util.List;
  * @param <T>: T can be any object
  */
 
-public abstract class InMemoryRepository<T> implements ICrudRepository<T> {
+public abstract class FileRepository<T> implements ICrudRepository<T> {
 
 
     protected List<T> repoList;
 
-    public InMemoryRepository() {
+    public FileRepository() {
         this.repoList = new ArrayList<>();
 
     }
@@ -37,6 +39,9 @@ public abstract class InMemoryRepository<T> implements ICrudRepository<T> {
     public List<T> getAll() {
         return this.repoList;
     }
+
+    @Override
+    public abstract T find(Integer id) throws CustomExceptions;
 
     @Override
     public void delete(T obj) {
