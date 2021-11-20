@@ -36,12 +36,20 @@ public class Controller {
 
     }
 
+    /**
+     * Read Method
+     */
     public void startInput() throws IOException {
         courseFileRepository.run();
         teacherFileRepository.run();
         studentFileRepository.run();
     }
 
+    /**
+     * Destructor/Save Method that has to been run
+     * before closing the program in order to save
+     * objects in consistent format
+     */
     public void saveInput() throws IOException {
         courseFileRepository.close();
         teacherFileRepository.close();
@@ -79,6 +87,15 @@ public class Controller {
         return courseFileRepository.add(new Course(id, name, maxEnrollment, credits));
     }
 
+    /**
+     * Student add Method
+     * @param firstName: String
+     * @param lastName: String
+     * @param studentId_: Int
+     * @param totalCredits_: Int
+     * @param coursesId: List<Integer>
+     * @return Student
+     */
     public Student addStudent(String firstName, String lastName, long studentId_, int totalCredits_, List<Integer> coursesId) {
         List<Course> tempCourses = new ArrayList<>();
         for (Integer id :
@@ -92,6 +109,14 @@ public class Controller {
         return studentFileRepository.add(new Student(firstName, lastName, studentId_, totalCredits_, tempCourses));
     }
 
+    /**
+     * Teacher add Method
+     * @param firstName: String
+     * @param lastName: String
+     * @param teacherId_: Int
+     * @param courses_: List<Integer>
+     * @return Teacher
+     */
     public Teacher addTeacher(String firstName, String lastName, int teacherId_, List<Integer> courses_){
         List<Course> tempCourses = new ArrayList<>();
         for (Integer id :
@@ -105,30 +130,69 @@ public class Controller {
         return teacherFileRepository.add(new Teacher(firstName, lastName, teacherId_, tempCourses));
     }
 
+    /**
+     * Find by id Method for Course
+     * @param id: Int
+     * @return Course
+     * @throws CustomExceptions in case of not found
+     */
     public Course findCourseById(int id) throws CustomExceptions {
         return courseFileRepository.find(id);
     }
 
+    /**
+     * Find Student by Id
+     * @param id: Int
+     * @return Student
+     * @throws CustomExceptions in case of not found
+     */
     public Student findStudentById(int id) throws CustomExceptions{
         return studentFileRepository.find(id);
     }
 
+    /**
+     * Find Teacher by Id
+     * @param id: Int
+     * @return Teacher
+     * @throws CustomExceptions in case of not found
+     */
     public Teacher findTeacherById(int id) throws CustomExceptions{
         return teacherFileRepository.find(id);
     }
 
+    /**
+     * Delete Course Method
+     * @param course: Course
+     */
     public void deleteCourse(Course course){
         courseFileRepository.delete(course);
     }
 
+    /**
+     * Delete Student Method
+     * @param student: Student
+     */
     public void deleteStudent(Student student){
         studentFileRepository.delete(student);
     }
 
+    /**
+     * Delete Teacher Method
+     * @param teacher: Teacher
+     */
     public void deleteTeacher(Teacher teacher){
         teacherFileRepository.delete(teacher);
     }
 
+    /**
+     * Update Course Method
+     * @param oldCourseId: Id of the Course that needs to be updated
+     * @param id: New Id
+     * @param name: String
+     * @param maxEnrollment: Int
+     * @param credits: Int
+     * @throws CustomExceptions in case of Course not found
+     */
     public void updateCourse(int oldCourseId, int id, String name, int maxEnrollment, int credits) throws CustomExceptions {
         Course tempCourse = findCourseById(oldCourseId);
         if(Objects.equals(name, ""))
@@ -137,6 +201,16 @@ public class Controller {
         courseFileRepository.update(tempCourse, new Course(id, name, maxEnrollment, credits));
     }
 
+    /**
+     * Update Student Method
+     * @param oldStudentId: Id of Student that needs to be updated
+     * @param firstName: String
+     * @param lastName: String
+     * @param studentId_: Int
+     * @param totalCredits_: Int
+     * @param coursesId: List<Integer>
+     * @throws CustomExceptions in case of Student not found
+     */
     public void updateStudent(long oldStudentId, String firstName, String lastName, long studentId_, int totalCredits_, List<Integer> coursesId) throws CustomExceptions {
         Student tempStudent = findStudentById((int) oldStudentId);
         if(Objects.equals(firstName, ""))
@@ -157,6 +231,15 @@ public class Controller {
         studentFileRepository.update(tempStudent, new Student(firstName, lastName, studentId_, totalCredits_, tempCourses));
     }
 
+    /**
+     * Update Teacher Method
+     * @param oldId: Id of Teacher that needs to be updated
+     * @param firstName: String
+     * @param lastName: String
+     * @param teacherId_: Int
+     * @param courses_: List<Integer>
+     * @throws CustomExceptions in case of Teacher not found
+     */
     public void updateTeacher(int oldId, String firstName, String lastName, int teacherId_, List<Integer> courses_) throws CustomExceptions {
         Teacher tempTeacher = findTeacherById(oldId);
         if (Objects.equals(firstName, ""))

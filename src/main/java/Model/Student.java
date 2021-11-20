@@ -31,7 +31,6 @@ public class Student extends Person{
      * @param lastName: String
      * @param studentId_: int - unique identifier for Student
      * @param totalCredits_: sum of all Courses credits
-     * @param enrolledCourses_: List<Course>
      */
 
     public Student(String firstName, String lastName, long studentId_, int totalCredits_) {
